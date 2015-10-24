@@ -1,0 +1,32 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: rgba(0, 125, 255, 0.87);
+  text-decoration: none;
+}
+  a:hover, a:focus {
+    text-decoration: underline;
+    font-style: italic;
+  }
+
+#splash-overlay {
+  padding: 80px;
+  background-color: white; color: rgba(0, 0, 0, 0.75);
+  font-family: 'Helvetica', sans-serif;
+}
+
+#my-king {
+  margin: 20px 0px 20px 0px;
+}
+  #my-king img {
+    height: 700px;
+  }
