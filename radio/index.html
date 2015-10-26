@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1.1">
+
+    <title>gallery@home Elevator Radio</title>
+
+    <meta name="google-site-verification" content="38CaGx8eFDKBsqmCYxYVSeEoUIsHRKDvH1HHvOHFXsA" />
+    <meta name="description" content="gallery, at, home - Elevator Radio" />
+    <meta name="author" content="gallery@home">
+    <meta name="keywords" content="gallery@home, online gallery, the gallery online, please help me look at art online, elevator radio">
+
+    <meta property="og:title" content="gallery@home"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://www.thegallery.online/media/my_king.jpg"/>
+    <meta property="og:description" content="gallery@home Elevator Radio Elevator in your home"/>
+    <meta property="og:url" content="http://www.thegallery.online/radio"/>
+
+    <meta property="fb:admins" content="100000919641751"/>
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@LIMP__BISCUIT" />
+    <meta name="twitter:creator" content="@LIMP__BISCUIT" />
+</head>
+<body>
+    <!-- content -->
+    <div class="splash-overlay">
+      <div class="splash-header">gallery@home Elevator Radio</div>
+      <div id="radio-toggle-button">turn on the radio</div>
+    </div>
+
+    <!-- scripts -->
+    <script src="../js/buzz.js"></script>
+    <script>
+      var hasLoadedSound = false;
+      var isAudible = true;
+      var ignoreButtonPresses = false;
+      var fadeDuration = 1500;
+      var radioMusic = new buzz.sound('/media/vape_at_whythe', {
+        formats: ['mp3', 'ogg'],
+        webAudioApi: true,
+        volume: 100
+      });
+
+      var radioToggleButton = document.getElementById('radio-toggle-button');
+      radioToggleButton.addEventListener('click', function (event) {
+        if (ignoreButtonPresses) {
+          return;
+        }
+
+        if (!hasLoadedSound) {
+          ignoreButtonPresses = true;
+          loadSound();
+          hasLoadedSound = true;
+        }
+        else {
+          if (isAudible) {
+            ignoreButtonPresses = true;
+            radioMusic.fadeOut(fadeDuration, function() {
+              ignoreButtonPresses = false;
+            });
+          }
+          else {
+            ignoreButtonPresses = true;
+            radioMusic.fadeIn(fadeDuration, function() {
+              ignoreButtonPresses = false;
+            });
+          }
+
+          isAudible = !isAudible;
+        }
+
+        radioToggleButton.innerHTML = isAudible ? 'turn off the radio' : 'turn on the radio';
+      });
+
+      function loadSound() {
+        // load up my elevator music
+        radioMusic.load();
+
+        radioMusic.bind('loadedmetadata', function() {
+          // mute and start playing so that seek works
+          radioMusic.setVolume(0);
+          radioMusic.loop().play();
+
+          // seek to specific section based on time like irl radio
+          var duration = radioMusic.getDuration();
+          var seekTime = Math.round(new Date().getTime() / 1000) % Math.round(duration);
+          radioMusic.setTime(seekTime);
+
+          // after seeking, fade in baby, fade in
+          radioMusic.fadeIn(fadeDuration, function() {
+            ignoreButtonPresses = false;
+          });
+        });
+      }
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50868415-6', 'auto');
+      ga('send', 'pageview');
+    </script>
+</body>
+</html>
