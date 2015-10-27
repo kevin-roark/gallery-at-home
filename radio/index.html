@@ -89,7 +89,9 @@
           var duration = radioMusic.getDuration();
           var seekTime = Math.round(new Date().getTime() / 1000) % Math.round(duration);
           radioMusic.setTime(seekTime);
+        });
 
+        radioMusic.bind('canplay', function() {
           // after seeking, fade in baby, fade in
           radioMusic.fadeIn(fadeDuration, function() {
             ignoreButtonPresses = false;
